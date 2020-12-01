@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { BiTrash } from 'react-icons/bi';
 import cn from 'classnames';
 
-import { IToDo } from '../store';
+import { IToDo, StoreContext } from '../store';
 
 function Todo({ id, title, isCompleted }: IToDo): React.ReactElement {
-  console.log({ id, title, isCompleted });
+  const { deleteToDo, completeToDo } = useContext(StoreContext);
 
   const titleClasses = cn({
     'line-through': isCompleted,
@@ -16,23 +16,26 @@ function Todo({ id, title, isCompleted }: IToDo): React.ReactElement {
   });
 
   return (
-    <div className='flex justify-items-start items-center p-3 gap-3'>
+    <div className='flex justify-items-start items-center p-1 gap-3'>
       <div className='align-middle'>
         <label className='inline-flex items-center mt-3'>
           <input
             type='checkbox'
             className='form-checkbox h-5 w-5 text-gray-600'
+            checked={isCompleted}
+            onChange={completeToDo.bind(null, id)}
           />
           <span className='ml-2 text-gray-700 hidden'>Complete ToDo</span>
         </label>
       </div>
       <div className={titleClasses}>{title}</div>
-      <div
+      <button
         className='fill-current text-blue-600 hover:text-blue-800 text-xl'
         title='Delete To Do'
+        onClick={deleteToDo.bind(null, id)}
       >
         <BiTrash />
-      </div>
+      </button>
     </div>
   );
 }
