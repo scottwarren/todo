@@ -1,6 +1,6 @@
 {
-  "short_name": "Todo App",
-  "name": "Todo App with IndexedDB",
+  "short_name": "procrastinate",
+  "name": "The list of things you've been putting off",
   "icons": [],
   "start_url": ".",
   "display": "standalone",
