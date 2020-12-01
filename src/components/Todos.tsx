@@ -1,28 +1,20 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
 
 import Todo from './Todo';
 import NewTodoForm from './NewTodoForm';
 import { StoreContext } from '../store';
 
-const Container = styled.div`
-  max-height: 80vw;
-  width: 60vw;
-`;
-
-const Title = styled.h2``;
-
 function Todos(): React.ReactElement {
   const { todos } = useContext(StoreContext);
 
   return (
-    <Container>
-      <Title>Todo App</Title>
+    <div className='flex flex-1 flex-col max-w-screen-lg p-6 bg-white rounded-xl shadow-md  '>
+      <h2 className='text-xl mb-3'>Todo App</h2>
       <NewTodoForm />
       {todos.map((todo) => (
         <Todo key={todo.id} {...todo} />
       ))}
-    </Container>
+    </div>
   );
 }
 
