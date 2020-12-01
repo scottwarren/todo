@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
-interface ToDo {
+export interface IToDo {
   id: string;
   title: string;
   isCompleted: boolean;
 }
 
 interface Store {
-  todos: ToDo[];
-  createNewTodo: (title: ToDo['title']) => ToDo;
+  todos: IToDo[];
+  createNewTodo: (title: IToDo['title']) => IToDo;
 }
 
 interface StoreProviderProps {
@@ -30,9 +30,9 @@ export const StoreProvider = ({
   children,
 }: StoreProviderProps): React.ReactElement => {
   // TODO: Extract to service and integrate with IndexedDB library
-  const [todos, setTodos] = useState<ToDo[]>([]);
+  const [todos, setTodos] = useState<IToDo[]>([]);
 
-  const createNewTodo = (title: ToDo['title']) => {
+  const createNewTodo = (title: IToDo['title']) => {
     const newTodo = { id: String(Date.now()), title, isCompleted: false };
 
     setTodos([...todos, newTodo]);
