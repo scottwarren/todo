@@ -10,7 +10,7 @@ export interface IToDo {
 
 interface Store {
   todos: IToDo[];
-  createNewTodo: (title: IToDo['title']) => IToDo;
+  createNewToDo: (title: IToDo['title']) => IToDo;
   deleteToDo: (id: IToDo['id']) => void;
 }
 
@@ -26,7 +26,7 @@ const generateNewTodo = (title: IToDo['title']) => ({
 
 const defaultStore: Store = {
   todos: [],
-  createNewTodo: generateNewTodo,
+  createNewToDo: generateNewTodo,
   deleteToDo: () => {
     console.info(
       'Using default store. Make sure to wrap the application in a provider'
@@ -42,7 +42,7 @@ export const StoreProvider = ({
   // TODO: Extract to service and integrate with IndexedDB library
   const [todos, setTodos] = useState<IToDo[]>([]);
 
-  const createNewTodo = (title: IToDo['title']) => {
+  const createNewToDo = (title: IToDo['title']) => {
     const newTodo = generateNewTodo(title);
 
     setTodos([...todos, newTodo]);
@@ -56,7 +56,7 @@ export const StoreProvider = ({
     setTodos(filteredTodos);
   };
 
-  const store: Store = { todos, createNewTodo, deleteToDo };
+  const store: Store = { todos, createNewToDo, deleteToDo };
 
   return (
     <StoreContext.Provider value={store}>{children}</StoreContext.Provider>

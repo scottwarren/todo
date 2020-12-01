@@ -2,7 +2,7 @@ import React, { useContext, useRef } from 'react';
 import { StoreContext } from '../store';
 
 function NewTodoForm(): React.ReactElement {
-  const { createNewTodo } = useContext(StoreContext);
+  const { createNewToDo } = useContext(StoreContext);
   const newTodoInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleSubmit = (ev: React.SyntheticEvent) => {
@@ -13,7 +13,7 @@ function NewTodoForm(): React.ReactElement {
     // Make sure we actually have something before we create a new todo
     if (!title) return;
 
-    createNewTodo(title);
+    createNewToDo(title);
   };
 
   return (
