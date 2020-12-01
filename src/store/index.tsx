@@ -11,6 +11,7 @@ export interface IToDo {
 interface Store {
   todos: IToDo[];
   createNewTodo: (title: IToDo['title']) => IToDo;
+  deleteToDo: (id: IToDo['id']) => void;
 }
 
 interface StoreProviderProps {
@@ -26,6 +27,11 @@ const generateNewTodo = (title: IToDo['title']) => ({
 const defaultStore: Store = {
   todos: [],
   createNewTodo: generateNewTodo,
+  deleteToDo: () => {
+    console.info(
+      'Using default store. Make sure to wrap the application in a provider'
+    );
+  },
 };
 
 export const StoreContext = React.createContext(defaultStore);
@@ -44,7 +50,13 @@ export const StoreProvider = ({
     return newTodo;
   };
 
-  const store: Store = { todos, createNewTodo };
+  const deleteToDo = (id: IToDo['id']) => {
+    const filteredTodos = todos.filter((todo) => todo.id !== id);
+
+    setTodos(filteredTodos);
+  };
+
+  const store: Store = { todos, createNewTodo, deleteToDo };
 
   return (
     <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
