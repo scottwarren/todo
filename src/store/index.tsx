@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { v4 as uuidv4 } from 'uuid';
+
 export interface IToDo {
   id: string;
   title: string;
@@ -15,13 +17,15 @@ interface StoreProviderProps {
   children?: React.ReactNode;
 }
 
+const generateNewTodo = (title: IToDo['title']) => ({
+  id: uuidv4(),
+  title,
+  isCompleted: false,
+});
+
 const defaultStore: Store = {
   todos: [],
-  createNewTodo: (title) => ({
-    id: String(Date.now()),
-    title,
-    isCompleted: false,
-  }),
+  createNewTodo: generateNewTodo,
 };
 
 export const StoreContext = React.createContext(defaultStore);
@@ -33,7 +37,7 @@ export const StoreProvider = ({
   const [todos, setTodos] = useState<IToDo[]>([]);
 
   const createNewTodo = (title: IToDo['title']) => {
-    const newTodo = { id: String(Date.now()), title, isCompleted: false };
+    const newTodo = generateNewTodo(title);
 
     setTodos([...todos, newTodo]);
 
