@@ -2,7 +2,7 @@ import React from 'react';
 
 import { StoreProvider } from './store';
 
-import TodosList from './components/TodosList';
+import ToDosList from './components/ToDosList';
 import NewTodoForm from './components/NewTodoForm';
 
 function App(): React.ReactElement {
@@ -14,7 +14,7 @@ function App(): React.ReactElement {
             The list of things you&apos;re putting off
           </h1>
           <NewTodoForm />
-          <TodosList />
+          <ToDosList />
         </div>
       </div>
     </StoreProvider>

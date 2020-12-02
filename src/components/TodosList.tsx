@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 
-import ToDo from './Todo';
+import ToDo from './ToDo';
 import { StoreContext } from '../store';
 
-function TodosList(): React.ReactElement {
+function ToDosList(): React.ReactElement {
   const { todos } = useContext(StoreContext);
 
   const title =
@@ -22,4 +22,4 @@ function TodosList(): React.ReactElement {
   );
 }
 
-export default TodosList;
+export default ToDosList;
