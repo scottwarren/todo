@@ -1,4 +1,4 @@
-# Todo With IndexedDB
+# ToDo With IndexedDB
 
 Simple ToDo application built using React for a hiring project.
 

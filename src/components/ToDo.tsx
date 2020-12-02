@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 import { IToDo, StoreContext } from '../store';
 
-function Todo({ id, title, isCompleted }: IToDo): React.ReactElement {
+function ToDo({ id, title, isCompleted }: IToDo): React.ReactElement {
   const { deleteToDo, completeToDo } = useContext(StoreContext);
 
   const titleClasses = cn({
@@ -39,4 +39,4 @@ function Todo({ id, title, isCompleted }: IToDo): React.ReactElement {
     </div>
   );
 }
-export default Todo;
+export default ToDo;

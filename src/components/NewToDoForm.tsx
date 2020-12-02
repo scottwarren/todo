@@ -3,12 +3,12 @@ import { StoreContext } from '../store';
 
 function NewToDoForm(): React.ReactElement {
   const { createNewToDo } = useContext(StoreContext);
-  const newTodoInputRef = useRef<HTMLInputElement | null>(null);
+  const newToDoInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleSubmit = (ev: React.SyntheticEvent) => {
     ev.preventDefault();
 
-    const title = newTodoInputRef.current?.value;
+    const title = newToDoInputRef.current?.value;
 
     // Make sure we actually have something before we create a new todo
     if (!title) return;
@@ -23,13 +23,13 @@ function NewToDoForm(): React.ReactElement {
         aria-label='Create New To Do'
         className='hidden'
       >
-        Create New Todo
+        Create New ToDo
       </label>
       <input
         className='flex-grow ml-0 px-4 py-2 text-sm text-blue-600 font-semibold rounded-xl border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2'
         type='text'
         id='new-todo'
-        ref={newTodoInputRef}
+        ref={newToDoInputRef}
         placeholder='Get Milk...'
       />
 

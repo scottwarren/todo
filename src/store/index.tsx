@@ -20,7 +20,7 @@ interface StoreProviderProps {
   children?: React.ReactNode;
 }
 
-const generateNewTodo = (title: IToDo['title']) => ({
+const generateNewToDo = (title: IToDo['title']) => ({
   id: uuidv4(),
   title,
   isCompleted: false,
@@ -34,7 +34,7 @@ const defaultStore: Store = {
   createNewToDo: async (title) => {
     console.info(defaultStoreMessage);
 
-    return generateNewTodo(title);
+    return generateNewToDo(title);
   },
   deleteToDo: async () => {
     console.info(defaultStoreMessage);
@@ -77,12 +77,12 @@ export const StoreProvider = ({
   const store: Store = {
     todos,
     createNewToDo: async (title: IToDo['title']) => {
-      const newTodo = generateNewTodo(title);
-      await db.todos.add(newTodo);
+      const newToDo = generateNewToDo(title);
+      await db.todos.add(newToDo);
 
       syncToDosWithDb();
 
-      return newTodo;
+      return newToDo;
     },
     deleteToDo: async (id: IToDo['id']) => {
       db.todos.delete(id);
