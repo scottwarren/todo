@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+
+import { ToDoDatabase } from './database';
 
 export interface IToDo {
   id: string;
@@ -9,9 +11,9 @@ export interface IToDo {
 
 interface Store {
   todos: IToDo[];
-  createNewToDo: (title: IToDo['title']) => IToDo;
-  deleteToDo: (id: IToDo['id']) => void;
-  completeToDo: (id: IToDo['id']) => void;
+  createNewToDo: (title: IToDo['title']) => Promise<IToDo>;
+  deleteToDo: (id: IToDo['id']) => Promise<void>;
+  completeToDo: (id: IToDo['id']) => Promise<void>;
 }
 
 interface StoreProviderProps {
@@ -29,50 +31,68 @@ const defaultStoreMessage =
 
 const defaultStore: Store = {
   todos: [],
-  createNewToDo: (title) => {
+  createNewToDo: async (title) => {
     console.info(defaultStoreMessage);
 
     return generateNewTodo(title);
   },
-  deleteToDo: () => {
+  deleteToDo: async () => {
     console.info(defaultStoreMessage);
   },
-  completeToDo: () => {
+  completeToDo: async () => {
     console.info(defaultStoreMessage);
   },
 };
 
 export const StoreContext = React.createContext(defaultStore);
 
+const db = new ToDoDatabase('todoDatabase');
+
 export const StoreProvider = ({
   children,
 }: StoreProviderProps): React.ReactElement => {
-  // TODO: Extract to service and integrate with IndexedDB library
-  const [todos, setTodos] = useState<IToDo[]>([]);
+  const [todos, setToDos] = useState<IToDo[]>([]);
+
+  useEffect(() => {
+    // TODO: type this
+    db.open().catch((err: Error) => {
+      console.error(`Open failed: ${err.stack}`);
+    });
+
+    async function fetchAllToDos() {
+      setToDos(await db.todos.toArray());
+    }
+
+    fetchAllToDos();
+
+    // Close the connection to the database when this is unmounted
+    return () => {
+      db.close();
+    };
+  }, []);
 
   const store: Store = {
     todos,
-    createNewToDo: (title: IToDo['title']) => {
+    createNewToDo: async (title: IToDo['title']) => {
       const newTodo = generateNewTodo(title);
+      await db.todos.add(newTodo);
 
-      setTodos([...todos, newTodo]);
+      setToDos(await db.todos.toArray());
 
       return newTodo;
     },
-    deleteToDo: (id: IToDo['id']) => {
-      const filteredTodos = todos.filter((todo) => todo.id !== id);
+    deleteToDo: async (id: IToDo['id']) => {
+      db.todos.delete(id);
 
-      setTodos(filteredTodos);
+      setToDos(await db.todos.toArray());
     },
-    completeToDo: (id) => {
-      const todoIndex = todos.findIndex((todo) => todo.id === id);
-      const todo = todos[todoIndex];
+    completeToDo: async (id) => {
+      const todoToUpdate = await db.todos.get(id);
 
-      const newTodos = [...todos];
-
-      todo.isCompleted = !todo.isCompleted;
-
-      setTodos(newTodos);
+      if (todoToUpdate) {
+        db.todos.update(id, { isCompleted: !todoToUpdate.isCompleted });
+        setToDos(await db.todos.toArray());
+      }
     },
   };
 
