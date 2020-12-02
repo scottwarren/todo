@@ -14,6 +14,11 @@ function NewToDoForm(): React.ReactElement {
     if (!title) return;
 
     createNewToDo(title);
+
+    if (newToDoInputRef?.current) {
+      // Reset the form so the user can enter a new todo
+      newToDoInputRef.current.value = '';
+    }
   };
 
   return (
