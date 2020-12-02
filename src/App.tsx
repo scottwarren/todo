@@ -3,7 +3,7 @@ import React from 'react';
 import { StoreProvider } from './store';
 
 import ToDosList from './components/ToDosList';
-import NewTodoForm from './components/NewTodoForm';
+import NewToDoForm from './components/NewToDoForm';
 
 function App(): React.ReactElement {
   return (
@@ -13,7 +13,7 @@ function App(): React.ReactElement {
           <h1 className='text-xl mb-3'>
             The list of things you&apos;re putting off
           </h1>
-          <NewTodoForm />
+          <NewToDoForm />
           <ToDosList />
         </div>
       </div>

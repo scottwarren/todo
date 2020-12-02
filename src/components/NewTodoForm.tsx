@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from 'react';
 import { StoreContext } from '../store';
 
-function NewTodoForm(): React.ReactElement {
+function NewToDoForm(): React.ReactElement {
   const { createNewToDo } = useContext(StoreContext);
   const newTodoInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -42,4 +42,4 @@ function NewTodoForm(): React.ReactElement {
     </form>
   );
 }
-export default NewTodoForm;
+export default NewToDoForm;
