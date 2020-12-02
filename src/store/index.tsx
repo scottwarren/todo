@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { ToDoDatabase } from './database';
+import { ToDoDatabase, db } from './database';
 
 export interface IToDo {
   id: string;
@@ -45,8 +45,6 @@ const defaultStore: Store = {
 };
 
 export const StoreContext = React.createContext(defaultStore);
-
-const db = new ToDoDatabase('todoDatabase');
 
 export const StoreProvider = ({
   children,

@@ -15,3 +15,5 @@ export class ToDoDatabase extends Dexie {
     this.todos = this.table('todos');
   }
 }
+
+export const db = new ToDoDatabase('todoDatabase');
