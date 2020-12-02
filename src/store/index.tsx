@@ -54,7 +54,6 @@ export const StoreProvider = ({
   const [todos, setToDos] = useState<IToDo[]>([]);
 
   useEffect(() => {
-    // TODO: type this
     db.open().catch((err: Error) => {
       console.error(`Open failed: ${err.stack}`);
     });
@@ -65,11 +64,15 @@ export const StoreProvider = ({
 
     fetchAllToDos();
 
-    // Close the connection to the database when this is unmounted
+    // Close the connection to the database when this component is unmounted
     return () => {
       db.close();
     };
   }, []);
+
+  async function syncToDosWithDb() {
+    setToDos(await db.todos.toArray());
+  }
 
   const store: Store = {
     todos,
@@ -77,14 +80,14 @@ export const StoreProvider = ({
       const newTodo = generateNewTodo(title);
       await db.todos.add(newTodo);
 
-      setToDos(await db.todos.toArray());
+      syncToDosWithDb();
 
       return newTodo;
     },
     deleteToDo: async (id: IToDo['id']) => {
       db.todos.delete(id);
 
-      setToDos(await db.todos.toArray());
+      syncToDosWithDb();
     },
     completeToDo: async (id) => {
       const todoToUpdate = await db.todos.get(id);
@@ -93,6 +96,7 @@ export const StoreProvider = ({
         db.todos.update(id, { isCompleted: !todoToUpdate.isCompleted });
         setToDos(await db.todos.toArray());
       }
+      syncToDosWithDb();
     },
   };
 
