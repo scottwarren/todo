@@ -94,9 +94,8 @@ export const StoreProvider = ({
 
       if (todoToUpdate) {
         db.todos.update(id, { isCompleted: !todoToUpdate.isCompleted });
-        setToDos(await db.todos.toArray());
+        syncToDosWithDb();
       }
-      syncToDosWithDb();
     },
   };
 
