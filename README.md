@@ -4,9 +4,11 @@ Simple ToDo application built using React for a hiring project.
 
 ## Features
 
-- (TODO) Syncing in real time with all connected clients (Using WebSockets)
-- (TODO) Using IndexedDB as a database
-- Ability to add/delete/complete/update todos
+- Todo list
+  - Add Todo
+  - Delete Todo
+  - Complete Todo
+- List is persisted between page refreshes using IndexedDB as a database ([Dexie.js](https://dexie.org/) as the abstraction)
 
 ## Setup
 
