@@ -10,7 +10,8 @@ function NewToDoForm(): React.ReactElement {
 
     const title = newToDoInputRef.current?.value;
 
-    // Make sure we actually have something before we create a new todo
+    // Make sure we actually have a todo to add before we create a new todo in the store
+    // pseudo-validation
     if (!title) return;
 
     createNewToDo(title);
