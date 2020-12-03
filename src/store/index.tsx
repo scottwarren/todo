@@ -24,6 +24,7 @@ const generateNewToDo = (title: IToDo['title']) => ({
   id: uuidv4(),
   title,
   isCompleted: false,
+  createdAt: Date.now(),
 });
 
 const defaultStoreMessage =
@@ -51,26 +52,27 @@ export const StoreProvider = ({
 }: StoreProviderProps): React.ReactElement => {
   const [todos, setToDos] = useState<IToDo[]>([]);
 
+  async function syncToDosWithDb() {
+    // Get the todos from the DB sorted by the latest first
+    const latestTodos = await db.todos.orderBy('createdAt').reverse().toArray();
+
+    // Sync what we received with our store state
+    setToDos(latestTodos);
+  }
+
   useEffect(() => {
     db.open().catch((err: Error) => {
       console.error(`Open failed: ${err.stack}`);
     });
 
-    async function fetchAllToDos() {
-      setToDos(await db.todos.toArray());
-    }
-
-    fetchAllToDos();
+    // Initial fetch from the database
+    syncToDosWithDb();
 
     // Close the connection to the database when this component is unmounted
     return () => {
       db.close();
     };
   }, []);
-
-  async function syncToDosWithDb() {
-    setToDos(await db.todos.toArray());
-  }
 
   const store: Store = {
     todos,

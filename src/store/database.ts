@@ -8,7 +8,7 @@ export class ToDoDatabase extends Dexie {
   constructor(databaseName: string) {
     super(databaseName);
     this.version(1).stores({
-      todos: '&++id,title,isCompleted',
+      todos: '&++id,title,isCompleted,createdAt',
     });
 
     // Just informing Typescript what Dexie has already done
