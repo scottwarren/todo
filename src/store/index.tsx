@@ -61,6 +61,7 @@ export const StoreProvider = ({
   }
 
   useEffect(() => {
+    // Open the connection to the database when the component is mounted
     db.open().catch((err: Error) => {
       console.error(`Open failed: ${err.stack}`);
     });
