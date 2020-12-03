@@ -14,7 +14,7 @@ function ToDosList(): React.ReactElement {
   // "overflow-y-scroll" allows for the list to be longer than the page. The user will be able to scroll through the todos
   return (
     <div className='overflow-y-scroll'>
-      <h2 className='text-xl mt-3'>{title}</h2>
+      <h2 className='text-l mt-3'>{title}</h2>
 
       {todos.map((todo) => (
         <ToDo key={todo.id} {...todo} />
