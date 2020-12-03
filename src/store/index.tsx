@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { ToDoDatabase, db } from './database';
+import { db } from './database';
 
 export interface IToDo {
   id: string;
